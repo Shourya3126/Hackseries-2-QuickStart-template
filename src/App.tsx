@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import AttendancePage from "./pages/dashboard/AttendancePage";
 import VotingPage from "./pages/dashboard/VotingPage";
+import TeacherVotingPage from "./pages/dashboard/TeacherVotingPage";
 import ComplaintsPage from "./pages/dashboard/ComplaintsPage";
 import CertificatesPage from "./pages/dashboard/CertificatesPage";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/dashboard/attendance" element={<AttendancePage />} />
           <Route path="/dashboard/voting" element={<VotingPage />} />
+          <Route path="/dashboard/teacher-voting" element={<TeacherVotingPage />} />
           <Route path="/dashboard/complaints" element={<ComplaintsPage />} />
           <Route path="/dashboard/certificates" element={<CertificatesPage />} />
           <Route path="/dashboard/analytics" element={<DashboardPage />} />

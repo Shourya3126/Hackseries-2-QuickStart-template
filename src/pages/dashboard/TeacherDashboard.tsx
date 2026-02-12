@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { BookOpen, Users, Vote, Award, Plus, X } from "lucide-react";
+import { BookOpen, Users, Vote, Award, Plus, X, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import StatCard from "@/components/dashboard/StatCard";
 import MintCertificate from "@/components/certificate/MintCertificate";
+import CreateElection from "@/components/voting/CreateElection";
 
 const sessions = [
   { name: "Data Structures - Sec A", date: "Feb 11, 2026", students: 45, present: 42 },
@@ -12,6 +14,7 @@ const sessions = [
 
 export default function TeacherDashboard() {
   const [showMint, setShowMint] = useState(false);
+  const [showCreateElection, setShowCreateElection] = useState(false);
 
   return (
     <div className="space-y-8">
@@ -27,6 +30,13 @@ export default function TeacherDashboard() {
           >
             <Award className="h-4 w-4" />
             {showMint ? "Close Issuer" : "Issue Certificate"}
+          </button>
+          <button
+            onClick={() => setShowCreateElection(!showCreateElection)}
+            className={`btn-glow inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-primary-foreground ${showCreateElection ? "bg-accent text-accent-foreground" : ""}`}
+          >
+            <Vote className="h-4 w-4" />
+            {showCreateElection ? "Close Election" : "Create Election"}
           </button>
           <button className="btn-glow inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-primary-foreground">
             <Plus className="h-4 w-4" />
@@ -48,12 +58,26 @@ export default function TeacherDashboard() {
             </div>
           </motion.div>
         )}
+        {showCreateElection && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="mb-8 border border-accent/20 rounded-xl p-1 bg-accent/5">
+              <CreateElection />
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={BookOpen} label="Active Sessions" value="3" />
         <StatCard icon={Users} label="Total Students" value="130" />
-        <StatCard icon={Vote} label="Elections Created" value="2" />
+        <Link to="/dashboard/teacher-voting">
+          <StatCard icon={Vote} label="Elections Created" value="2" />
+        </Link>
         <StatCard icon={Award} label="Certs Issued" value="45" change="+12" positive />
       </div>
 

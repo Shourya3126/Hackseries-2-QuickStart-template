@@ -41,6 +41,7 @@ export default function VoteOnChain({
     const [status, setStatus] = useState<VoteStatus>("idle");
     const [txId, setTxId] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const castVote = async () => {
         setStatus("preparing");
@@ -102,7 +103,14 @@ export default function VoteOnChain({
 
             const result = await submitRes.json();
             setTxId(result.txId);
-            setStatus("confirmed");
+            
+            // Show success message for 2 seconds
+            setShowSuccessMessage(true);
+            setTimeout(() => {
+                setShowSuccessMessage(false);
+                setStatus("confirmed");
+            }, 2000);
+            
             onSuccess?.(result.txId);
         } catch (err: any) {
             const msg = err?.message || "Vote failed";
@@ -151,8 +159,31 @@ export default function VoteOnChain({
 
     return (
         <div className="space-y-3">
+            {/* Success Message - Shows for 2 seconds */}
+            {showSuccessMessage && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="flex flex-col items-center justify-center rounded-xl border border-accent/20 bg-accent/10 p-8 text-center"
+                >
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", duration: 0.5 }}
+                        className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/20"
+                    >
+                        <CheckCircle className="h-10 w-10 text-accent" />
+                    </motion.div>
+                    <h3 className="text-xl font-bold text-accent">Voting Successful!</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        Your vote has been recorded on the blockchain
+                    </p>
+                </motion.div>
+            )}
+
             {/* Vote button */}
-            {status === "idle" && (
+            {status === "idle" && !showSuccessMessage && (
                 <motion.button
                     onClick={castVote}
                     whileHover={{ scale: 1.02 }}

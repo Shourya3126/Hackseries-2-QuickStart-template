@@ -77,6 +77,7 @@ router.post(
             }
 
             // ── 2. Check 1-wallet-1-vote ──────────────────────────
+            if (!election.voters) election.voters = [];
             if (election.voters.includes(senderAddress)) {
                 return res.status(409).json({
                     error: "This wallet has already voted in this election",
@@ -148,6 +149,8 @@ router.post(
             if (candidateIndex >= election.candidates.length) {
                 return res.status(400).json({ error: "Invalid candidate index" });
             }
+            if (!election.voters) election.voters = [];
+            if (!election.voterChoices) election.voterChoices = {};
             if (election.voters.includes(walletAddr)) {
                 return res.status(409).json({
                     error: "This wallet has already voted",
@@ -157,9 +160,13 @@ router.post(
             // ── 2. Broadcast to Algorand ──────────────────────────
             const result = await blockchain.submitSignedTx(signedTxn);
 
-            // ── 3. Record vote in DB (wallet tracked, choice stays anonymous)
+            // ── 3. Record vote in DB (wallet tracked, choice stays anonymous on-chain but we track locally)
             election.candidates[candidateIndex].voteCount += 1;
+            if (!election.voters) election.voters = [];
+            if (!election.voterChoices) election.voterChoices = {};
+            
             election.voters.push(walletAddr);
+            election.voterChoices[walletAddr] = candidateIndex;
             await election.save();
 
             res.json({

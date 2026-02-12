@@ -9,10 +9,11 @@ import { useAlgorand } from "@/hooks/useAlgorand";
 import WalletConnectButton from "@/components/wallet/WalletConnectButton";
 
 export default function VotingPage() {
-  const { isAuthenticated } = useAppStore();
+  const { isAuthenticated, user } = useAppStore();
   const { address } = useAlgorand();
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(null);
-  const [hasVoted, setHasVoted] = useState(false);
+  const [selectedElection, setSelectedElection] = useState<string | null>(null);
+  const [votedElections, setVotedElections] = useState<Set<string>>(new Set());
   const [elections, setElections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +29,15 @@ export default function VotingPage() {
         if (res.ok) {
           const data = await res.json();
           setElections(data.elections);
+          
+          // Mark elections where user has already voted
+          const voted = new Set<string>();
+          data.elections.forEach((election: any) => {
+            if (election.hasVoted) {
+              voted.add(election.id.toString());
+            }
+          });
+          setVotedElections(voted);
         }
       } catch (error) {
         console.error("Failed to fetch elections", error);
@@ -36,7 +46,7 @@ export default function VotingPage() {
       }
     };
     fetchElections();
-  }, []);
+  }, [address]);
 
   return (
     <DashboardLayout>
@@ -88,40 +98,80 @@ export default function VotingPage() {
 
               {election.candidates.length > 0 ? (
                 <div className="pt-4 space-y-6">
+                  {/* Show who student voted for if they already voted */}
+                  {votedElections.has(election.id.toString()) && election.votedFor !== null && election.votedFor !== undefined && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="rounded-xl bg-accent/5 border border-accent/20 p-4 mb-4"
+                    >
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="h-6 w-6 text-accent" />
+                        <div>
+                          <p className="text-sm font-semibold text-accent">You voted for:</p>
+                          <p className="text-base font-bold">{election.candidates[election.votedFor]?.name}</p>
+                          {election.candidates[election.votedFor]?.party && (
+                            <p className="text-xs text-muted-foreground">{election.candidates[election.votedFor]?.party}</p>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
                   <div className="space-y-3">
-                    {election.candidates.map((c: any, i: number) => (
-                      <button
-                        key={c.name}
-                        onClick={() => !hasVoted && setSelectedCandidate(i)}
-                        disabled={hasVoted || !address}
-                        className={`flex w-full items-center justify-between rounded-lg border px-4 py-3 text-left transition-all ${selectedCandidate === i
-                          ? "border-accent bg-accent/5 ring-1 ring-accent"
-                          : "border-border/50 bg-muted/20 hover:border-primary/30 hover:bg-muted/40"
-                          } ${(hasVoted || !address) && selectedCandidate !== i ? "opacity-50 cursor-not-allowed" : ""}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                            {c.name[0]}
+                    {election.candidates.map((c: any, i: number) => {
+                      const isSelected = selectedCandidate === i && selectedElection === election.id.toString();
+                      const hasVotedInThisElection = votedElections.has(election.id.toString());
+                      const isVotedCandidate = hasVotedInThisElection && election.votedFor === i;
+                      
+                      return (
+                        <button
+                          key={c.name}
+                          onClick={() => {
+                            if (!hasVotedInThisElection && address) {
+                              setSelectedCandidate(i);
+                              setSelectedElection(election.id.toString());
+                            }
+                          }}
+                          disabled={hasVotedInThisElection || !address}
+                          className={`flex w-full items-center justify-between rounded-lg border px-4 py-3 text-left transition-all ${
+                            isVotedCandidate
+                              ? "border-accent bg-accent/10 ring-2 ring-accent"
+                              : isSelected
+                              ? "border-accent bg-accent/5 ring-1 ring-accent"
+                              : "border-border/50 bg-muted/20 hover:border-primary/30 hover:bg-muted/40"
+                          } ${(hasVotedInThisElection || !address) && !isSelected && !isVotedCandidate ? "opacity-50 cursor-not-allowed" : ""}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${
+                              isVotedCandidate ? "bg-accent/20 text-accent" : "bg-primary/10 text-primary"
+                            }`}>
+                              {c.name[0]}
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">{c.name}</p>
+                              <p className="text-xs text-muted-foreground">{c.party}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-sm font-medium">{c.name}</p>
-                            <p className="text-xs text-muted-foreground">{c.party}</p>
+                          <div className="flex items-center gap-2">
+                            {(isSelected || isVotedCandidate) && <CheckCircle className={`h-4 w-4 ${isVotedCandidate ? "text-accent" : "text-accent"}`} />}
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <Users className="h-3 w-3" />
+                              {c.votes}
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {selectedCandidate === i && <CheckCircle className="h-4 w-4 text-accent" />}
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Users className="h-3 w-3" />
-                            {c.votes}
-                          </div>
-                        </div>
-                      </button>
-                    ))}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Voting Action Area */}
                   <AnimatePresence>
-                    {selectedCandidate !== null && !hasVoted && address && election.status === "active" && (
+                    {selectedCandidate !== null && 
+                     selectedElection === election.id.toString() && 
+                     !votedElections.has(election.id.toString()) && 
+                     address && 
+                     election.status === "active" && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
@@ -137,16 +187,24 @@ export default function VotingPage() {
                             electionId={election.id.toString()}
                             candidateIndex={selectedCandidate}
                             candidateName={election.candidates[selectedCandidate].name}
-                            electionTitle={election.title}
+                            electionTitle={election.title}vote is immutable on Algorand blockchain
                             senderAddress={address}
-                            onSuccess={(txId) => setHasVoted(true)}
+                            onSuccess={(txId) => {
+                              setVotedElections(prev => new Set(prev).add(election.id.toString()));
+                              setSelectedCandidate(null);
+                              setSelectedElection(null);
+                              // Refresh elections data
+                              setTimeout(() => {
+                                window.location.reload();
+                              }, 2500);
+                            }}
                           />
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  {hasVoted && (
+                  {votedElections.has(election.id.toString()) && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}

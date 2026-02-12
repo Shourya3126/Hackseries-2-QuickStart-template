@@ -18,7 +18,7 @@ const studentNav = [
 const teacherNav = [
   { to: "/dashboard", icon: Home, label: "Overview" },
   { to: "/dashboard/attendance", icon: BookOpen, label: "Sessions" },
-  { to: "/dashboard/voting", icon: Vote, label: "Elections" },
+  { to: "/dashboard/teacher-voting", icon: Vote, label: "Elections" },
   { to: "/dashboard/certificates", icon: Award, label: "Issue Certs" },
 ];
 

@@ -5,6 +5,11 @@ class Election {
         Object.assign(this, data);
     }
 
+    static async find(query = {}) {
+        const items = db.find("elections", query);
+        return items.map(item => new Election(item));
+    }
+
     static async findOne(query) {
         const item = db.findOne("elections", query);
         return item ? new Election(item) : null;
@@ -28,6 +33,10 @@ class Election {
             this._id = newItem._id;
         }
         return this;
+    }
+
+    static async deleteById(id) {
+        return db.deleteById("elections", id);
     }
 }
 

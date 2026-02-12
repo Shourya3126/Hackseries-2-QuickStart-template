@@ -39,10 +39,68 @@
       "_id": "9eb607b4-42fe-4863-b794-18ba8adf4754",
       "createdAt": "2026-02-12T05:29:19.454Z",
       "updatedAt": "2026-02-12T05:29:19.454Z"
+    },
+    {
+      "email": "sai@gamil.com",
+      "passwordHash": "$2a$12$DNp979ctpQM.fTESlq42WuNFndr16xu.khDv4YaW1bd.izD27EX/K",
+      "role": "student",
+      "walletAddress": "5QAYDULON6DMBCCXSIOIZWRNT2HZNQAK2EKEXFUEQYN4XOANMINDFK5JCY",
+      "algorandMnemonic": "fiction melody outdoor rotate exile coin section salute guide flag initial merge spoil seek spider argue crash sorry topple sock dish path solar ability mountain",
+      "_id": "7a43fe23-49f2-465b-b11f-aa41ec745196",
+      "createdAt": "2026-02-12T11:30:39.733Z",
+      "updatedAt": "2026-02-12T11:31:07.296Z"
+    },
+    {
+      "email": "sai77@gmail.com",
+      "passwordHash": "$2a$12$oNcgCOKXP23nNsDEQ9iWTO.xD1XOBY7gMweuUTXrg4usSqGbqtmba",
+      "role": "student",
+      "walletAddress": "7RL4MTQWBQBYO6IOKTPNWC6KJ2ZWCAKGR7QG6JTT5H2GYZGOE5NNAHH4AM",
+      "algorandMnemonic": "tent loyal assault tell sadness school captain romance swamp dismiss spawn become boring reward fox tuna baby because primary aim mass island wrestle absorb security",
+      "_id": "1863fe2c-3760-40e3-8724-dd07900b8298",
+      "createdAt": "2026-02-12T13:33:43.774Z",
+      "updatedAt": "2026-02-12T13:33:43.774Z"
+    },
+    {
+      "email": "sai78@gmail.com",
+      "passwordHash": "$2a$12$.DBnJQobijXdapqEKHLxmOsSjZuQaZG5atzKij6eqaSS3YpZdHXLK",
+      "role": "student",
+      "walletAddress": "5QAYDULON6DMBCCXSIOIZWRNT2HZNQAK2EKEXFUEQYN4XOANMINDFK5JCY",
+      "algorandMnemonic": "tower erode hill rude insane broken bridge average scrub adjust seed ready item blur still stable canal fatal festival boring memory diamond extra ability reform",
+      "_id": "b22fd88f-4918-4193-a448-33044c3e1a85",
+      "createdAt": "2026-02-12T14:08:38.986Z",
+      "updatedAt": "2026-02-12T14:09:02.072Z"
     }
   ],
   "sessions": [],
-  "elections": [],
+  "elections": [
+    {
+      "title": "Class Representative",
+      "createdBy": "123ec3be-ab38-41e7-8d37-9535e514edbb",
+      "status": "active",
+      "endsAt": "2026-03-20T10:50:00.000Z",
+      "candidates": [
+        {
+          "name": "Siddharth",
+          "party": "",
+          "voteCount": 1
+        },
+        {
+          "name": "Prathmesh",
+          "party": "",
+          "voteCount": 0
+        }
+      ],
+      "_id": "508f2043-f8b6-4713-ac3a-42f3c8a796b2",
+      "createdAt": "2026-02-12T13:32:57.459Z",
+      "updatedAt": "2026-02-12T14:09:44.019Z",
+      "voters": [
+        "5QAYDULON6DMBCCXSIOIZWRNT2HZNQAK2EKEXFUEQYN4XOANMINDFK5JCY"
+      ],
+      "voterChoices": {
+        "5QAYDULON6DMBCCXSIOIZWRNT2HZNQAK2EKEXFUEQYN4XOANMINDFK5JCY": 0
+      }
+    }
+  ],
   "complaints": [
     {
       "originalHash": "e8769507e0d92ce9917a4f42ac371ed034353419752d0b8233cd8221c76da90f",
@@ -65,6 +123,17 @@
       "_id": "662b35ee-5200-475e-bcdc-f6bb0080f3b4",
       "createdAt": "2026-02-12T05:32:22.257Z",
       "updatedAt": "2026-02-12T05:32:22.257Z"
+    },
+    {
+      "originalHash": "17f7a650dd05f672eecbad23397e6986476b2059244cc321d4e3d644af707324",
+      "anonymizedText": "khgjssduhusdhusuh",
+      "category": "Infrastructure",
+      "priority": "low",
+      "priorityScore": 32,
+      "txHash": "S4SPQYQBE4PYLCI2REFDMH6CXIXSGHUAJIKGSTUG4ATAFED4MGUA",
+      "_id": "8cf849b6-dfa3-47e2-86e5-109a8c981775",
+      "createdAt": "2026-02-12T11:31:37.062Z",
+      "updatedAt": "2026-02-12T11:31:37.062Z"
     }
   ],
   "certificates": []

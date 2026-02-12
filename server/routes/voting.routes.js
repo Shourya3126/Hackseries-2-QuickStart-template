@@ -46,6 +46,8 @@ router.post(
                     party: c.party,
                     voteCount: 0,
                 })),
+                voters: [],
+                voterChoices: {}
             });
 
             res.status(201).json({ election });
@@ -86,6 +88,8 @@ router.post(
             }
 
             // One wallet = one vote
+            if (!election.voters) election.voters = [];
+            if (!election.voterChoices) election.voterChoices = {};
             if (election.voters.includes(walletAddr)) {
                 return res.status(409).json({ error: "You have already voted in this election" });
             }
@@ -99,6 +103,7 @@ router.post(
             // Update election
             election.candidates[candidateIndex].voteCount += 1;
             election.voters.push(walletAddr);
+            election.voterChoices[walletAddr] = candidateIndex;
             await election.save();
 
             res.json({
@@ -144,7 +149,7 @@ router.get("/results/:id", async (req, res, next) => {
 // ── GET /api/election/list ─────────────────────────────
 router.get("/election/list", authMiddleware, async (req, res, next) => {
     try {
-        const elections = await Election.find().sort({ createdAt: -1 });
+        const elections = await Election.find({});
 
         const formattedElections = elections.map(e => ({
             id: e._id,
@@ -156,7 +161,11 @@ router.get("/election/list", authMiddleware, async (req, res, next) => {
                 party: c.party,
                 votes: c.voteCount
             })),
-            voters: e.voters ? e.voters.length : 0
+            voters: e.voters ? e.voters.length : 0,
+            hasVoted: e.voters ? e.voters.includes(req.user.walletAddress) : false,
+            votedFor: (e.voters && e.voterChoices && req.user.walletAddress) 
+                ? e.voterChoices[req.user.walletAddress] 
+                : null
         }));
 
         res.json({ elections: formattedElections });
@@ -164,5 +173,30 @@ router.get("/election/list", authMiddleware, async (req, res, next) => {
         next(err);
     }
 });
+
+// ── DELETE /api/election/:id ───────────────────────────
+router.delete(
+    "/election/:id",
+    authMiddleware,
+    requireRole("teacher", "admin"),
+    async (req, res, next) => {
+        try {
+            const election = await Election.findById(req.params.id);
+            if (!election) {
+                return res.status(404).json({ error: "Election not found" });
+            }
+
+            // Only allow creator or admin to delete
+            if (election.createdBy !== req.user.id && req.user.role !== "admin") {
+                return res.status(403).json({ error: "Not authorized to delete this election" });
+            }
+
+            await Election.deleteById(req.params.id);
+            res.json({ message: "Election deleted successfully" });
+        } catch (err) {
+            next(err);
+        }
+    }
+);
 
 module.exports = router;
