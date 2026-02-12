@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "email": "sanskar.nalegaonkar.7@gmail.com",
+      "passwordHash": "$2a$12$AZ3.nlQfajBz/Z4YhFn5/uCvhxPWINJcO11WGDrYB0sWE5YVWy2X6",
+      "role": "student",
+      "walletAddress": "LHA4MEKYHS7JQ2Y64IB74XXX6C5N3IDEQKSKJA5KKDJB3AP5R6AGRHOXEM",
+      "algorandMnemonic": "short second tool dutch churn cloth mention attend recall toe alpha ordinary forest shrimp decline section glad code file chef desert fold cupboard ability field",
+      "_id": "0bcfcca8-eef6-46f3-af78-2ad25f5e3970",
+      "createdAt": "2026-02-12T05:04:00.590Z",
+      "updatedAt": "2026-02-12T05:04:00.590Z"
+    },
+    {
+      "email": "s@gmail.com",
+      "passwordHash": "$2a$12$w7958QVZU1aHPARAK1ErTO6OXvyAJPo1zHAPqZ5irDbwJ0ZDxckem",
+      "role": "teacher",
+      "walletAddress": "25G2XWHHHWLWG7TUP2O6W4JQ4UTJHC42YTRKMGKRSLOQLSJ5PULAZ3Q3II",
+      "algorandMnemonic": "recall mention since lock stem steak involve project initial early limb buyer inherit hand toy matter doctor antique powder section fall orchard escape absent thought",
+      "_id": "123ec3be-ab38-41e7-8d37-9535e514edbb",
+      "createdAt": "2026-02-12T05:21:41.476Z",
+      "updatedAt": "2026-02-12T05:22:10.347Z"
+    },
+    {
+      "email": "sanskar.nalegaonkar@gmail.com",
+      "passwordHash": "$2a$12$cuRePI1YG7DkUxiTWE9NxOKaf958rwcFo9R52Eq6nhO3kuCndBuge",
+      "role": "student",
+      "walletAddress": "36CGOG75Z4QW7BUKEWS3H7LHI3NVRMD37OKFRR6ZIANFGE3ECF5JHW3ZTA",
+      "algorandMnemonic": "enlist merge nuclear raise winner provide dentist scene museum emotion proof achieve sorry update elbow plastic boss paper lemon loop convince collect whip absorb derive",
+      "_id": "b7da1c2f-917d-4d4e-83e9-c4ab2a4aabe8",
+      "createdAt": "2026-02-12T05:24:44.578Z",
+      "updatedAt": "2026-02-12T05:24:44.578Z"
+    },
+    {
+      "email": "a@gmail.com",
+      "passwordHash": "$2a$12$viiUhKMqZQSI1LpWIEAQS.SMXbuH6ctSzju5hXuZE/9jnfNQiIi.S",
+      "role": "admin",
+      "walletAddress": "WYZYP2ZPN6WN7TXP2363P5PH6YG4AITMPSQV653YR76YLEQENK373FKXTY",
+      "algorandMnemonic": "gloom slight penalty figure knock behind steel milk brown catch subject citizen ribbon symbol fluid acid defy simple movie outdoor okay impulse eyebrow about basic",
+      "_id": "9eb607b4-42fe-4863-b794-18ba8adf4754",
+      "createdAt": "2026-02-12T05:29:19.454Z",
+      "updatedAt": "2026-02-12T05:29:19.454Z"
+    }
+  ],
+  "sessions": [],
+  "elections": [],
+  "complaints": [
+    {
+      "originalHash": "e8769507e0d92ce9917a4f42ac371ed034353419752d0b8233cd8221c76da90f",
+      "anonymizedText": "sankar nalegaonkar",
+      "category": "Infrastructure",
+      "priority": "low",
+      "priorityScore": 32,
+      "txHash": "XOJMY7NBSCQU446LMLJCKXV2KA34LW5SDHOME53S2B5EUHCD7T4Q",
+      "_id": "fff97a25-7625-4ffc-841c-4af69b36f666",
+      "createdAt": "2026-02-12T05:16:22.440Z",
+      "updatedAt": "2026-02-12T05:16:22.440Z"
+    },
+    {
+      "originalHash": "3f6b216e6ef444568563363c9cd4da6d1badb1ea8aba9460871c82fcb038b15a",
+      "anonymizedText": "sidinsefnfknfkaffe",
+      "category": "Infrastructure",
+      "priority": "low",
+      "priorityScore": 32,
+      "txHash": "5W73KX77XDQHJA35JIXQHJX3LSAMC2FXWGYZMAVNVNYDPCOHWBDQ",
+      "_id": "662b35ee-5200-475e-bcdc-f6bb0080f3b4",
+      "createdAt": "2026-02-12T05:32:22.257Z",
+      "updatedAt": "2026-02-12T05:32:22.257Z"
+    }
+  ],
+  "certificates": []
+}
